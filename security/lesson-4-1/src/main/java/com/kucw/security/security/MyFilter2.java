@@ -13,6 +13,15 @@ public class MyFilter2 extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         System.out.println("MyFilter2");
-        filterChain.doFilter(request, response);
+
+        String url = request.getRequestURI();
+
+        if(url.equals("/hello")){
+            System.out.println("Hello 允許通過！");
+            filterChain.doFilter(request, response);
+        } else {
+            System.out.println("其他請求被拒絕！");
+            response.setStatus(500);
+        }
     }
 }
